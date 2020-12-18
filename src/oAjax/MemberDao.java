@@ -37,16 +37,17 @@ public class MemberDao {
 		int result = 1;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql = "select id from MEMBER1 where id = ?";
 		try {
 			conn = getConnection();
-			String sql = "select id from MEMBER1 where id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			result = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
 			if(rs.next()) result = 1;
 			else    	  result = 0;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			result = -1;
 		}finally {
 			if(rs != null) rs.close();
 			if(pstmt != null) pstmt.close();
